@@ -1,14 +1,16 @@
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  useQuery,
-  gql,
-} from "@apollo/client";
+import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
+
+const httpLink = new HttpLink({
+  uri: "http://localhost:3000/graphql",
+  fetchOptions: {
+    mode: "cors",
+  },
+});
 
 const client = new ApolloClient({
-  uri: "http://localhost:3000",
   cache: new InMemoryCache(),
+  link: httpLink,
+  connectToDevTools: true,
 });
 
 export default client;

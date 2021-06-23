@@ -1,32 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { Admin, Loading, Resource } from "react-admin";
-import buildGraphQLProvider from "ra-data-graphql-simple";
-
+import { Admin, fetchUtils, Loading, Resource } from "react-admin";
+import { ApolloProvider } from "@apollo/client";
+import simpleRestProvider from "ra-data-simple-rest";
 import "./App.css";
 import graphClient from "libs/graphqlClient";
-import PostList from "resources/post/PostList";
+
+import Layout from "common/components/Layout";
+import CustomRoutes from "./CustomRoutes";
+
+const httpClient = (url: string, options = {}) => {
+  return fetchUtils.fetchJson(url, { ...options, mode: "cors" });
+};
+const dataProvider = simpleRestProvider("http://localhost:3000", httpClient);
 
 function App() {
-  const [dataProvider, setDataProvider] = useState<any>(undefined);
-  useEffect(() => {
-    buildGraphQLProvider({ client: graphClient }).then((dataProvider: any) =>
-      setDataProvider(dataProvider)
-    );
-  }, []);
-
   return (
-    <div className="App">
-      {!dataProvider ? (
-        <Loading
-          loadingPrimary="app.page.loading"
-          loadingSecondary="app.message.loading"
-        />
-      ) : (
-        <Admin dataProvider={dataProvider}>
-          <Resource name="RatePlan" list={PostList} />
+    <ApolloProvider client={graphClient}>
+      <div className="App">
+        <Admin
+          dataProvider={dataProvider}
+          layout={Layout}
+          customRoutes={CustomRoutes}
+        >
+          <Resource name="rateplan" />
         </Admin>
-      )}
-    </div>
+      </div>
+    </ApolloProvider>
   );
 }
 

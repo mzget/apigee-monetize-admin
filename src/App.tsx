@@ -1,24 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import { Admin, Loading, Resource } from "react-admin";
+import buildGraphQLProvider from "ra-data-graphql-simple";
+
+import "./App.css";
+import graphClient from "libs/graphqlClient";
+import PostList from "resources/post/PostList";
 
 function App() {
+  const [dataProvider, setDataProvider] = useState<any>(undefined);
+  useEffect(() => {
+    buildGraphQLProvider({ client: graphClient }).then((dataProvider: any) =>
+      setDataProvider(dataProvider)
+    );
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {!dataProvider ? (
+        <Loading
+          loadingPrimary="app.page.loading"
+          loadingSecondary="app.message.loading"
+        />
+      ) : (
+        <Admin dataProvider={dataProvider}>
+          <Resource name="RatePlan" list={PostList} />
+        </Admin>
+      )}
     </div>
   );
 }

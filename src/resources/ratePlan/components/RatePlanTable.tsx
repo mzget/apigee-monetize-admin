@@ -10,7 +10,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
-import { RatePlan } from "libs/graphql.schema";
+import { RatePlanType } from "generated/graphql";
 import { Link } from "react-router-dom";
 
 const columns = [
@@ -60,7 +60,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function StickyHeadTable({ rows }: { rows: RatePlan[] }) {
+export default function StickyHeadTable({ rows }: { rows: RatePlanType[] }) {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -121,7 +121,7 @@ export default function StickyHeadTable({ rows }: { rows: RatePlan[] }) {
         count={rows.length}
         rowsPerPage={rowsPerPage}
         page={page}
-        onChangePage={handleChangePage}
+        onPageChange={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
     </Paper>

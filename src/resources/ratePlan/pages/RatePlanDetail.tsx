@@ -1,25 +1,42 @@
 import React, { Fragment } from "react";
-import { useQuery } from "@apollo/client";
 import { Loading } from "react-admin";
+import { useQuery } from "react-query";
+import { request } from "graphql-request";
 import { FIND_ONE_RATEPLAN } from "common/query";
-import { RatePlan } from "libs/graphql.schema";
+import { RatePlanType } from "generated/graphql";
 import RatePlanDetail from "../components/RatePlanDetail";
+import client from "libs/graphqlClient";
 
-export default function RatePlanDetailPage() {
-  const { loading, error, data } = useQuery<{ ratePlan: RatePlan }>(
-    FIND_ONE_RATEPLAN,
+function useRatePlan(package_id:string, plan_id: string) {
+  return useQuery(
+    ["ratePlan", plan_id],
+    async () => {
+      const {ratePlan} = await client.request(
+        FIND_ONE_RATEPLAN, {
+          package_id: package_id, 
+          plan_id: plan_id
+        }
+      );
+
+      console.log(ratePlan);
+      return ratePlan;
+    },
     {
-      variables: {
-        package_id: "manage-bundle-by-api-7rsc",
-        plan_id: "manage-bundle-by-api-7rsc_ratecard_by_api",
-      },
+      enabled: !!plan_id,
     }
   );
+}
 
-  if (loading) return <p>Loading...</p>;
+export default function RatePlanDetailPage() {
+
+  const { status, data, error, isFetching } = useRatePlan(
+     "manage-bundle-by-api-7rsc",
+     "manage-bundle-by-api-7rsc_ratecard_by_api");
+
+
+  if (isFetching) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
-  console.log(data);
 
   return (
     <Fragment>{!data ? <Loading /> : <RatePlanDetail data={data} />}</Fragment>

@@ -1,0 +1,437 @@
+#
+type RatePlans {
+  #
+  data: [RatePlanType]
+
+  #
+  total: Int
+}
+
+#
+type Company {
+  #
+  apps: [String]
+
+  #
+  attributes: [Attribute]
+
+  #
+  createdAt: Float
+
+  #
+  createdBy: String
+
+  #
+  description: String
+
+  #
+  displayName: String
+
+  #
+  lastModifiedAt: Float
+
+  #
+  lastModifiedBy: String
+
+  #
+  name: String
+
+  #
+  organization: String
+
+  #
+  status: String
+}
+
+#
+type Organization {
+  #
+  address: [Address]
+
+  #
+  approveTrusted: Boolean
+
+  #
+  approveUntrusted: Boolean
+
+  #
+  billingCycle: String
+
+  #
+  country: String
+
+  #
+  currency: String
+
+  #
+  description: String
+
+  #
+  hasBillingAdjustment: Boolean
+
+  #
+  hasBroker: Boolean
+
+  #
+  hasSelfBilling: Boolean
+
+  #
+  hasSeparateInvoiceForProduct: Boolean
+
+  #
+  id: String
+
+  #
+  issueNettingStmt: Boolean
+
+  #
+  name: String
+
+  #
+  nettingStmtPerCurrency: Boolean
+
+  #
+  regNo: String
+
+  #
+  selfBillingAsExchOrg: Boolean
+
+  #
+  selfBillingForAllDev: Boolean
+
+  #
+  separateInvoiceForFees: Boolean
+
+  #
+  status: String
+
+  #
+  supportedBillingType: String
+
+  #
+  taxEngineExternalId: String
+
+  #
+  taxModel: String
+
+  #
+  taxRegNo: String
+
+  #
+  timezone: String
+}
+
+#
+type Currency {
+  #
+  description: String
+
+  #
+  displayName: String
+
+  #
+  id: String
+
+  #
+  name: String
+
+  #
+  organization: Organization
+
+  #
+  status: String
+
+  #
+  virtualCurrency: Boolean
+}
+
+#
+type Query {
+  #
+  apiPackage(package_id: String): APIPackage
+
+  #
+  apiPackages(page: Int, size: Int, monetized: Boolean): APIPackages
+
+  #
+  companies: CompanyWithTotal
+
+  #
+  company(company_name: String): Company
+
+  #
+  developerRateplans(size: Int, developer_id: String, page: Int): RatePlans
+
+  #
+  organization: Organization
+
+  #
+  ratePlan(package_id: String, plan_id: String): RatePlanType
+
+  #
+  ratePlans(size: Int, page: Int): RatePlans
+}
+
+#
+type Attribute {
+  #
+  name: String
+
+  #
+  value: String
+}
+
+#
+type Address {
+  #
+  address1: String
+
+  #
+  address2: String
+
+  #
+  city: String
+
+  #
+  country: String
+
+  #
+  id: String
+
+  #
+  isPrimary: Boolean
+
+  #
+  state: String
+
+  #
+  zip: String
+}
+
+#
+type APIPackage {
+  #
+  description: String
+
+  #
+  displayName: String
+
+  #
+  id: String
+
+  #
+  name: String
+
+  #
+  organization: Organization
+
+  #
+  product: [APIProduct]
+
+  #
+  status: String
+}
+
+#
+type APIProduct {
+  #
+  description: String
+
+  #
+  displayName: String
+
+  #
+  id: String
+
+  #
+  name: String
+
+  #
+  organization: Organization
+
+  #
+  refundSuccessCriteria: String
+
+  #
+  status: String
+
+  #
+  transactionSuccessCriteria: String
+}
+
+#
+type APIPackages {
+  #
+  data: [APIPackage]
+
+  #
+  total: Int
+}
+
+#
+type RatePlanType {
+  #
+  advance: Boolean
+
+  #
+  contractDuration: Int
+
+  #
+  contractDurationType: String
+
+  #
+  currency: Currency
+
+  #
+  customPaymentTerm: Boolean
+
+  #
+  description: String
+
+  #
+  displayName: String
+
+  #
+  earlyTerminationFee: Int
+
+  #
+  frequencyDuration: Int
+
+  #
+  frequencyDurationType: String
+
+  #
+  id: String
+
+  #
+  isPrivate: Boolean
+
+  #
+  keepOriginalStartDate: Boolean
+
+  #
+  monetizationPackage: APIPackage
+
+  #
+  name: String
+
+  #
+  organization: Organization
+
+  #
+  paymentDueDays: String
+
+  #
+  prorate: String
+
+  #
+  published: Boolean
+
+  #
+  ratePlanDetails: [RatePlanDetail]
+
+  #
+  recurringFee: Int
+
+  #
+  recurringStartUnit: Int
+
+  #
+  recurringType: String
+
+  #
+  setUpFee: Int
+
+  #
+  startDate: String
+
+  #
+  type: String
+}
+
+#
+type RatePlanDetail {
+  #
+  aggregateFreemiumCounters: Boolean
+
+  #
+  aggregateStandardCounters: Boolean
+
+  #
+  aggregateTransactions: Boolean
+
+  #
+  currency: Currency
+
+  #
+  customPaymentTerm: Boolean
+
+  #
+  duration: Int
+
+  #
+  durationType: String
+
+  #
+  freemiumDuration: Int
+
+  #
+  freemiumDurationType: String
+
+  #
+  freemiumUnit: Int
+
+  #
+  id: String
+
+  #
+  meteringType: String
+
+  #
+  organization: Organization
+
+  #
+  paymentDueDays: String
+
+  #
+  ratePlanRates: [RatePlanRates]
+
+  #
+  ratingParameter: String
+
+  #
+  revenueType: String
+
+  #
+  type: String
+}
+
+#
+type RatePlanRates {
+  #
+  endUnit: Int
+
+  #
+  id: String
+
+  #
+  rate: Float
+
+  #
+  revshare: Float
+
+  #
+  startUnit: Int
+
+  #
+  type: String
+}
+
+#
+type CompanyWithTotal {
+  #
+  data: [Company]
+
+  #
+  total: Int
+}

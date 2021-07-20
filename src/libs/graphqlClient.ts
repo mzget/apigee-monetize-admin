@@ -1,16 +1,6 @@
-import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
+import {  GraphQLClient } from 'graphql-request'
 
-const httpLink = new HttpLink({
-  uri: "http://localhost:3000/graphql",
-  fetchOptions: {
-    mode: "cors",
-  },
-});
-
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  link: httpLink,
-  connectToDevTools: true,
-});
-
-export default client;
+const endpoint = process.env.REACT_APP_GRAPHQL as string
+const client = new GraphQLClient(process.env.NODE_ENV === "production" ?endpoint:"/graphql", 
+{ headers: {}, mode: "no-cors" })
+export default client

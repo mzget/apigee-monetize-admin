@@ -1,21 +1,24 @@
-import { gql } from "@apollo/client";
+import {  gql } from "graphql-request";
 
 export const RATEPLAN_QUERY = gql`
-  query ratePlans {
-    ratePlans {
-      id
-      name
-      displayName
-      startDate
-      type
-      isPrivate
-      published
-      ratePlanDetails {
+  query ratePlans($page: Int!, $size: Int!){
+    ratePlans(page: $page, size: $size) {
+      data {
         id
+        name
+        displayName
+        startDate
+        type
+        isPrivate
+        published
+        ratePlanDetails {
+          id
+        }
+        monetizationPackage {
+          id
+        }
       }
-      monetizationPackage {
-        id
-      }
+      total
     }
   }
 `;

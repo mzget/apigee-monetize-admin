@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, TextField, Paper } from "@material-ui/core";
+import { RatePlanType } from "generated/graphql";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RatePlanDetail({ data }) {
+export default function RatePlanDetail({ data }:{data: RatePlanType}) {
   const classes = useStyles();
 
   return (
@@ -31,6 +32,7 @@ export default function RatePlanDetail({ data }) {
               className={classes.textField}
               label="Rate plan name"
               required
+              defaultValue={data.name}
             />
           </Grid>
           <Grid item sm={6} md={4}>

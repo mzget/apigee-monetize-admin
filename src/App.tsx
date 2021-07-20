@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Admin, fetchUtils, Loading, Resource } from "react-admin";
-import { ApolloProvider } from "@apollo/client";
 import simpleRestProvider from "ra-data-simple-rest";
-import "./App.css";
-import graphClient from "libs/graphqlClient";
+import {
+  QueryClient,
+  QueryClientProvider,
+} from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 
+import "./App.css";
 import Layout from "common/components/Layout";
 import CustomRoutes from "./CustomRoutes";
 
+const queryClient = new QueryClient();
 const httpClient = (url: string, options = {}) => {
   return fetchUtils.fetchJson(url, { ...options, mode: "cors" });
 };
@@ -15,7 +19,7 @@ const dataProvider = simpleRestProvider("http://localhost:3000", httpClient);
 
 function App() {
   return (
-    <ApolloProvider client={graphClient}>
+    <QueryClientProvider client={queryClient}>
       <div className="App">
         <Admin
           dataProvider={dataProvider}
@@ -25,7 +29,9 @@ function App() {
           <Resource name="rateplan" />
         </Admin>
       </div>
-    </ApolloProvider>
+
+<ReactQueryDevtools initialIsOpen={false} />
+</QueryClientProvider>
   );
 }
 

@@ -1,7 +1,7 @@
-import {  gql } from "graphql-request";
+import { gql } from "graphql-request";
 
 export const RATEPLAN_QUERY = gql`
-  query ratePlans($page: Int!, $size: Int!){
+  query ratePlans($page: Int!, $size: Int!) {
     ratePlans(page: $page, size: $size) {
       data {
         id
@@ -35,6 +35,7 @@ export const FIND_ONE_RATEPLAN = gql`
       }
       monetizationPackage {
         id
+        name
       }
       published
       ratePlanDetails {

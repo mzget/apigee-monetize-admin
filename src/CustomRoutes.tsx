@@ -6,7 +6,10 @@ import RatePlanDetail from "resources/ratePlan/pages/RatePlanDetail";
 
 const CustomRoutes = [
   <Route exact path="/rateplan" component={RatePlanPage} />,
-  <Route path="/rateplan/:id" component={RatePlanDetail} />,
+  <Route
+    path="/package/:package_id/rateplan/:plan_id"
+    component={RatePlanDetail}
+  />,
 ];
 
 export default CustomRoutes;

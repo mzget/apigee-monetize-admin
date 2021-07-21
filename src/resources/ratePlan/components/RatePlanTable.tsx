@@ -41,8 +41,8 @@ const columns = [
     label: "Action",
     minWidth: 170,
     align: "right",
-    render: (id) => (
-      <Link to={`rateplan/${id}`}>
+    render: (row: RatePlanType) => (
+      <Link to={`package/${row.monetizationPackage?.id}/rateplan/${row.id}`}>
         <IconButton color="primary" aria-label="Edit">
           <EditIcon />
         </IconButton>
@@ -101,7 +101,7 @@ export default function StickyHeadTable({ rows }: { rows: RatePlanType[] }) {
                       const value = row[column.id];
                       return column.render ? (
                         <TableCell key={column.id} align={column.align as any}>
-                          {column.render(row.id)}
+                          {column.render(row)}
                         </TableCell>
                       ) : (
                         <TableCell key={column.id} align={column.align as any}>

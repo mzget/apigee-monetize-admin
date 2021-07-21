@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RatePlanDetail({ data }:{data: RatePlanType}) {
+export default function RatePlanDetail({ data }: { data: RatePlanType }) {
   const classes = useStyles();
 
   return (
@@ -42,6 +42,7 @@ export default function RatePlanDetail({ data }:{data: RatePlanType}) {
               className={classes.textField}
               label="Product bundle name"
               required
+              defaultValue={data.monetizationPackage?.name}
             />
           </Grid>
           <Grid item sm={6} md={4}>
@@ -51,6 +52,9 @@ export default function RatePlanDetail({ data }:{data: RatePlanType}) {
               className={classes.textField}
               label="Rate plan type"
               required
+              defaultValue={
+                data.ratePlanDetails && data.ratePlanDetails.map((v) => v?.type)
+              }
             />
           </Grid>
           <Grid item sm={6} md={4}>
@@ -59,6 +63,7 @@ export default function RatePlanDetail({ data }:{data: RatePlanType}) {
               fullWidth
               className={classes.textField}
               label="Audience"
+              defaultValue={data.type}
             />
           </Grid>
         </Grid>
